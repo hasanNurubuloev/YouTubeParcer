@@ -1,5 +1,6 @@
 package com.geektech.youtubeparcer.ui.playlist
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,9 +11,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class PlaylistViewModel : ViewModel (){
+class PlaylistViewModel : ViewModel() {
 
-    fun fetchPlaylist() : LiveData<PlayList>{
+    fun fetchPlaylist(): LiveData<PlayList> {
         return fetchYoutubePlaylist()
     }
 
@@ -21,21 +22,24 @@ class PlaylistViewModel : ViewModel (){
     val part = "snippet,contentDetails"
     val maxResult = "50"
 
-    private  var  apiService: YouTubeApi? = null
-     fun fetchYoutubePlaylist(): LiveData<PlayList> {
+    private var apiService: YouTubeApi? = null
+    fun fetchYoutubePlaylist(): LiveData<PlayList> {
         apiService = RetrofitClient.create()
 
-         val data = MutableLiveData<PlayList>()
-         apiService?.fetchAllPlaylist(part, apiKey, channelId, maxResult)
-             ?.enqueue(object : Callback<PlayList> {
-                 override fun onFailure(call: Call<PlayList>, t: Throwable) {
+        val data = MutableLiveData<PlayList>()
+        apiService?.fetchAllPlaylist(apiKey, part, channelId, maxResult)
+            ?.enqueue(object : Callback<PlayList> {
+                override fun onFailure(call: Call<PlayList>, t: Throwable) {
                     data.value = null
-                 }
-                 override fun onResponse(call: Call<PlayList>, response: Response<PlayList>) {
-                    data.value = response.body()
+                    Log.v("ololo", t.message)
+                }
 
-                 }
-             })
-         return data
+                override fun onResponse(call: Call<PlayList>, response: Response<PlayList>) {
+                    data.value = response.body()
+                    Log.v("ololo", response.code().toString())
+
+                }
+            })
+        return data
     }
 }

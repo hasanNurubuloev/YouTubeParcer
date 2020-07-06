@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit
 
 class RetrofitClient () {
     companion object {
-        private const val BASE_URL = "https://www.googleapis.com"
+        private const val BASE_URL = "https://www.googleapis.com/youtube/"
 
         fun create() : YouTubeApi? {
             val okHttpClient = OkHttpClient().newBuilder()
