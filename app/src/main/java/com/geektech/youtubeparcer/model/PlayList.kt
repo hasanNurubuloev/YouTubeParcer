@@ -4,11 +4,11 @@ import com.google.gson.annotations.SerializedName
 
 data class PlayList(
     @SerializedName("kind")
-    var kind: String? = null,
+    var kind: String,
     @SerializedName("etag")
-    var etag: String? = null,
-    var nextPageToken: String? = null,
-    var pageInfo: PageInfo? = null,
-    var items: MutableList<Items>? = null
+    var etag: String,
+    var nextPageToken: String,
+    var pageInfo: PageInfo,
+    var items: List<Item>
 
 )

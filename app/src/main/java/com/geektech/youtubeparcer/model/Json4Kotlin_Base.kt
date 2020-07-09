@@ -7,5 +7,5 @@ data class Json4Kotlin_Base (
 	@SerializedName("etag") val etag : String,
 	@SerializedName("nextPageToken") val nextPageToken : String,
 	@SerializedName("pageInfo") val pageInfo : PageInfo,
-	@SerializedName("items") val items : List<Items>
+	@SerializedName("items") val items : List<Item>
 )

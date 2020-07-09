@@ -1,21 +1,22 @@
 package com.geektech.youtubeparcer.ui.playlist
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.geektech.youtubeparcer.R
-import com.geektech.youtubeparcer.model.PlayList
+import com.geektech.youtubeparcer.model.Item
+import kotlinx.android.synthetic.main.item_playlist.view.*
 
 class PlaylistAdapter(//    var list: MutableList<PlayList>? = null
-    var list: MutableList<PlayList>,
+    var list: MutableList<Item>,
     var listener: PlaylistViewHolder.OnClickVH
 ) : RecyclerView.Adapter<PlaylistViewHolder>() {
 
-    fun update(element: PlayList) {
-        list.add(element)
+    fun update(elements: MutableList<Item>) {
+        list.addAll(elements)
         notifyDataSetChanged()
     }
 
@@ -32,16 +33,15 @@ class PlaylistAdapter(//    var list: MutableList<PlayList>? = null
 
     override fun getItemCount(): Int {
         return list.size
+
     }
 }
 
 class PlaylistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    var image: ImageView = itemView.findViewById(R.id.img_playlist)
-    var tvTitle: TextView = itemView.findViewById(R.id.tv_title_playlist)
-    var tvAmount: TextView = itemView.findViewById(R.id.tv_video_amount)
-
-    fun onBind(video: PlayList) {
-        tvTitle.text = video.kind
+    fun onBind(items: Item) {
+        Glide.with(itemView.context).load(items.snippet.thumbnails.default.url).into(itemView.img_playlist)
+        itemView.tv_title_playlist.text = items.snippet.title
+        itemView.tv_video_amount.text = items.contentDetails.itemCount.toString() + " video series"
     }
 
     fun viewHoldersClick(inter: OnClickVH) {

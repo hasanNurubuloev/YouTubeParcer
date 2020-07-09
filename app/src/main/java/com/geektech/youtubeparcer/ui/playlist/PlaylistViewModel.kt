@@ -22,6 +22,8 @@ class PlaylistViewModel : ViewModel() {
     val part = "snippet,contentDetails"
     val maxResult = "50"
 
+
+
     private var apiService: YouTubeApi? = null
     fun fetchYoutubePlaylist(): LiveData<PlayList> {
         apiService = RetrofitClient.create()
@@ -31,12 +33,10 @@ class PlaylistViewModel : ViewModel() {
             ?.enqueue(object : Callback<PlayList> {
                 override fun onFailure(call: Call<PlayList>, t: Throwable) {
                     data.value = null
-                    Log.v("ololo", t.message)
                 }
 
                 override fun onResponse(call: Call<PlayList>, response: Response<PlayList>) {
                     data.value = response.body()
-                    Log.v("ololo", response.code().toString())
 
                 }
             })

@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.geektech.youtubeparcer.R
 import com.geektech.youtubeparcer.model.PlayList
+import com.geektech.youtubeparcer.ui.playlist.PlaylistViewHolder
+import kotlinx.android.synthetic.main.item_detail_playlist.view.*
 
-class PlaylistDetailAdapter: RecyclerView.Adapter<PlaylistDetailViewHolder>() {
-    var list: MutableList<PlayList>? = null
-
-
+class PlaylistDetailAdapter : RecyclerView.Adapter<PlaylistDetailViewHolder>() {
+    private var list: MutableList<PlayList>? = null
 
 
     fun update(list: MutableList<PlayList>) {
@@ -20,7 +20,7 @@ class PlaylistDetailAdapter: RecyclerView.Adapter<PlaylistDetailViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaylistDetailViewHolder {
         return PlaylistDetailViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_playlist, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_detail_playlist, parent, false)
         )
     }
 
@@ -37,6 +37,17 @@ class PlaylistDetailAdapter: RecyclerView.Adapter<PlaylistDetailViewHolder>() {
 class PlaylistDetailViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun onBind(video: PlayList?) {
-
+    itemView.tv_title_video.text = video?.kind
     }
+    fun viewHoldersClick(inter: PlaylistViewHolder.OnClickVH) {
+        itemView.setOnClickListener {
+            inter.onClickV(adapterPosition)
+        }
+    }
+
+    interface OnClickVideo {
+        fun onClickVideo(position: Int)
+    }
+
+
 }
