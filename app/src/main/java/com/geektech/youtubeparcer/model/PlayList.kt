@@ -9,6 +9,6 @@ data class PlayList(
     var etag: String,
     var nextPageToken: String,
     var pageInfo: PageInfo,
-    var items: List<Item>
+    var items: MutableList<PlaylistItem>
 
 )

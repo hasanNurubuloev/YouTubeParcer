@@ -1,21 +1,20 @@
 package com.geektech.youtubeparcer.ui.playlist
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.geektech.youtubeparcer.R
-import com.geektech.youtubeparcer.model.Item
+import com.geektech.youtubeparcer.model.PlaylistItem
 import kotlinx.android.synthetic.main.item_playlist.view.*
 
-class PlaylistAdapter(//    var list: MutableList<PlayList>? = null
-    var list: MutableList<Item>,
+class PlaylistAdapter(//
     var listener: PlaylistViewHolder.OnClickVH
 ) : RecyclerView.Adapter<PlaylistViewHolder>() {
 
-    fun update(elements: MutableList<Item>) {
+    private var list = mutableListOf<PlaylistItem>()
+    fun update(elements: MutableList<PlaylistItem>) {
         list.addAll(elements)
         notifyDataSetChanged()
     }
@@ -27,8 +26,7 @@ class PlaylistAdapter(//    var list: MutableList<PlayList>? = null
     }
 
     override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) {
-        holder.onBind(list[position])
-        holder.viewHoldersClick(listener)
+        holder.onBind(list[position], listener)
     }
 
     override fun getItemCount(): Int {
@@ -38,19 +36,17 @@ class PlaylistAdapter(//    var list: MutableList<PlayList>? = null
 }
 
 class PlaylistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    fun onBind(items: Item) {
-        Glide.with(itemView.context).load(items.snippet.thumbnails.default.url).into(itemView.img_playlist)
-        itemView.tv_title_playlist.text = items.snippet.title
-        itemView.tv_video_amount.text = items.contentDetails.itemCount.toString() + " video series"
-    }
-
-    fun viewHoldersClick(inter: OnClickVH) {
+    fun onBind(items: PlaylistItem, inter: OnClickVH) {
+        Glide.with(itemView.context).load(items.snippet?.thumbnails?.default?.url)
+            .into(itemView.img_playlist)
+        itemView.tv_title_playlist.text = items.snippet?.title
+        itemView.tv_video_amount.text = items.contentDetails?.itemCount.toString() + " video series"
         itemView.setOnClickListener {
-            inter.onClickV(adapterPosition)
+            inter.onClickV(items, adapterPosition)
         }
     }
 
     interface OnClickVH {
-        fun onClickV(position: Int)
+        fun onClickV(dto: PlaylistItem, position: Int)
     }
 }

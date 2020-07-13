@@ -10,7 +10,23 @@ interface YouTubeApi {
     fun fetchAllPlaylist(
         @Query("key") apiKey: String,
         @Query("part") part: String,
-        @Query ("channelId") channelId: String,
-        @Query ("maxResult") maxResult: String
+        @Query("channelId") channelId: String,
+        @Query("maxResult") maxResult: String
     ): Call<PlayList>
+
+    @GET("v3/playlistItems")
+    fun getSelectedPlaylist(
+        @Query("key") apiKey: String,
+        @Query("part") part: String,
+        @Query("playlistId") playlistId: String,
+        @Query("maxResult") maxResult: String
+    ): Call<PlayList>
+
+    @GET("v3/videos")
+    fun searchVideo(
+        @Query("key") apiKey: String,
+        @Query("part") part: String,
+        @Query("id") id: String
+    ): Call<PlayList>
+
 }
