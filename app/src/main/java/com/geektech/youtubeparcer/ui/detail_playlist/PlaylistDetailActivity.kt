@@ -10,6 +10,8 @@ import com.geektech.youtubeparcer.base.BaseActivity
 import com.geektech.youtubeparcer.model.PlaylistItem
 import com.geektech.youtubeparcer.ui.detail_video.VideoActivity
 import kotlinx.android.synthetic.main.activity_playlist_detail.*
+import kotlinx.android.synthetic.main.activity_video.*
+import kotlinx.android.synthetic.main.playlist_detail_toolbar.view.*
 
 class PlaylistDetailActivity : BaseActivity(R.layout.activity_playlist_detail),
     PlaylistDetailViewHolder.OnClickVideo {
@@ -20,10 +22,15 @@ class PlaylistDetailActivity : BaseActivity(R.layout.activity_playlist_detail),
     override fun setupUI() {
         viewModel = ViewModelProviders.of(this).get(PlaylistDetailViewModel::class.java)
         setupAdapter()
+        clickBack()
     }
 
     override fun setupLiveData() {
         subscribeToDetailPlaylist()
+    }
+
+    private fun clickBack() {
+        toolbar.back.setOnClickListener{finish()}
     }
 
     private fun setupAdapter() {
